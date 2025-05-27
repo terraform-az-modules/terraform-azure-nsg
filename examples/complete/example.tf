@@ -75,7 +75,7 @@ module "log-analytics" {
   name                             = local.name
   environment                      = local.environment
   label_order                      = local.label_order
-  create_log_analytics_workspace   = false
+  create_log_analytics_workspace   = true
   resource_group_name              = module.resource_group.resource_group_name
   log_analytics_workspace_location = module.resource_group.resource_group_location
 
