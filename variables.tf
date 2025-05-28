@@ -49,7 +49,7 @@ variable "extra_tags" {
 
 variable "repository" {
   type        = string
-  default     = "https://github.com/clouddrove-sandbox/azure-test-nsg.git"
+  default     = "https://github.com/terraform-az-modules/terraform-azure-nsg"
   description = "Terraform current module repo"
 
   validation {
@@ -95,13 +95,37 @@ variable "enabled" {
 ## Network Security Groups
 ##-----------------------------------------------------------------------------
 variable "inbound_rules" {
-  type        = any
+  type = list(object({
+    name                         = string
+    priority                     = number
+    access                       = string
+    protocol                     = string
+    source_address_prefix        = optional(string)
+    source_address_prefixes      = optional(list(string))
+    source_port_range            = optional(string)
+    destination_address_prefix   = optional(string)
+    destination_address_prefixes = optional(list(string))
+    destination_port_range       = optional(string)
+    description                  = optional(string)
+  }))
   default     = []
   description = "List of objects that represent the configuration of each inbound rule."
 }
 
 variable "outbound_rules" {
-  type        = any
+  type = list(object({
+    name                         = string
+    priority                     = number
+    access                       = string
+    protocol                     = string
+    source_address_prefix        = optional(string)
+    source_address_prefixes      = optional(list(string))
+    source_port_range            = optional(string)
+    destination_address_prefix   = optional(string)
+    destination_address_prefixes = optional(list(string))
+    destination_port_range       = optional(string)
+    description                  = optional(string)
+  }))
   default     = []
   description = "List of objects that represent the configuration of each outbound rule."
 }

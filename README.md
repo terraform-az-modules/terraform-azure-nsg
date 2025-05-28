@@ -70,7 +70,6 @@ This table contains both Prerequisites and Providers:
 📌 For additional usage examples, check the complete list under [`examples/`](./examples) directory.
 
 
-
 ## Requirements
 
 | Name | Version |
@@ -88,7 +87,7 @@ This table contains both Prerequisites and Providers:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_labels"></a> [labels](#module\_labels) | github.com/terraform-az-modules/terraform-azure-tags | feat/labels-update |
+| <a name="module_labels"></a> [labels](#module\_labels) | terraform-az-modules/tags/azure | 1.0.0 |
 
 ## Resources
 
@@ -120,7 +119,7 @@ This table contains both Prerequisites and Providers:
 | <a name="input_flow_log_retention_policy_enabled"></a> [flow\_log\_retention\_policy\_enabled](#input\_flow\_log\_retention\_policy\_enabled) | Boolean flag to enable/disable retention. | `bool` | `false` | no |
 | <a name="input_flow_log_storage_account_id"></a> [flow\_log\_storage\_account\_id](#input\_flow\_log\_storage\_account\_id) | The id of storage account in which flow logs will be received. Note: Currently, only standard-tier storage accounts are supported. | `string` | `null` | no |
 | <a name="input_flow_log_version"></a> [flow\_log\_version](#input\_flow\_log\_version) | The version (revision) of the flow log. Possible values are 1 and 2. | `number` | `1` | no |
-| <a name="input_inbound_rules"></a> [inbound\_rules](#input\_inbound\_rules) | List of objects that represent the configuration of each inbound rule. | `any` | `[]` | no |
+| <a name="input_inbound_rules"></a> [inbound\_rules](#input\_inbound\_rules) | List of objects that represent the configuration of each inbound rule. | <pre>list(object({<br>    name                         = string<br>    priority                     = number<br>    access                       = string<br>    protocol                     = string<br>    source_address_prefix        = optional(string)<br>    source_address_prefixes      = optional(list(string))<br>    source_port_range            = optional(string)<br>    destination_address_prefix   = optional(string)<br>    destination_address_prefixes = optional(list(string))<br>    destination_port_range       = optional(string)<br>    description                  = optional(string)<br>  }))</pre> | `[]` | no |
 | <a name="input_label_order"></a> [label\_order](#input\_label\_order) | Label order, e.g. sequence of application name and environment `name`,`environment`,'attribute' [`webserver`,`qa`,`devops`,`public`,] . | `list(any)` | <pre>[<br>  "name",<br>  "environment"<br>]</pre> | no |
 | <a name="input_location"></a> [location](#input\_location) | The location/region where the virtual network is created. Changing this forces a new resource to be created. | `string` | `""` | no |
 | <a name="input_log_analytics_destination_type"></a> [log\_analytics\_destination\_type](#input\_log\_analytics\_destination\_type) | Possible values are AzureDiagnostics and Dedicated, default to AzureDiagnostics. When set to Dedicated, logs sent to a Log Analytics workspace will go into resource specific tables, instead of the legacy AzureDiagnostics table. | `string` | `"AzureDiagnostics"` | no |
@@ -130,9 +129,9 @@ This table contains both Prerequisites and Providers:
 | <a name="input_managedby"></a> [managedby](#input\_managedby) | ManagedBy, eg 'terraform-az-modules'. | `string` | `"terraform-az-modules"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
 | <a name="input_network_watcher_name"></a> [network\_watcher\_name](#input\_network\_watcher\_name) | The name of the Network Watcher. Changing this forces a new resource to be created. | `string` | `null` | no |
-| <a name="input_outbound_rules"></a> [outbound\_rules](#input\_outbound\_rules) | List of objects that represent the configuration of each outbound rule. | `any` | `[]` | no |
+| <a name="input_outbound_rules"></a> [outbound\_rules](#input\_outbound\_rules) | List of objects that represent the configuration of each outbound rule. | <pre>list(object({<br>    name                         = string<br>    priority                     = number<br>    access                       = string<br>    protocol                     = string<br>    source_address_prefix        = optional(string)<br>    source_address_prefixes      = optional(list(string))<br>    source_port_range            = optional(string)<br>    destination_address_prefix   = optional(string)<br>    destination_address_prefixes = optional(list(string))<br>    destination_port_range       = optional(string)<br>    description                  = optional(string)<br>  }))</pre> | `[]` | no |
 | <a name="input_read"></a> [read](#input\_read) | Used when retrieving the Resource Group. | `string` | `"5m"` | no |
-| <a name="input_repository"></a> [repository](#input\_repository) | Terraform current module repo | `string` | `"https://github.com/clouddrove-sandbox/azure-test-nsg.git"` | no |
+| <a name="input_repository"></a> [repository](#input\_repository) | Terraform current module repo | `string` | `"https://github.com/terraform-az-modules/terraform-azure-nsg"` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group in which to create the network security group. | `string` | n/a | yes |
 | <a name="input_resource_position_prefix"></a> [resource\_position\_prefix](#input\_resource\_position\_prefix) | Controls the placement of the resource type keyword (e.g., "vnet", "ddospp") in the resource name.<br><br>- If true, the keyword is prepended: "vnet-core-dev".<br>- If false, the keyword is appended: "core-dev-vnet".<br><br>This helps maintain naming consistency based on organizational preferences. | `bool` | `true` | no |
 | <a name="input_update"></a> [update](#input\_update) | Used when updating the Resource Group. | `string` | `"30m"` | no |

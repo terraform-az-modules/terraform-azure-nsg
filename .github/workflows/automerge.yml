@@ -2,16 +2,9 @@ name: Auto merge
 on:
   pull_request:
 jobs:
-  auto-merge-complete-example:
+  auto-merge:
     uses: clouddrove/github-shared-workflows/.github/workflows/auto_merge.yml@master
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
     with:
       tfcheck: 'examples/complete/**'
-  
-  auto-merge-nsg-with-flow-logs-example:
-    uses: clouddrove/github-shared-workflows/.github/workflows/auto_merge.yml@master
-    secrets:
-      GITHUB: ${{ secrets.GITHUB }}
-    with:
-      tfcheck: 'examples/nsg_with_flow_logs/**'
