@@ -146,6 +146,12 @@ This table contains both Prerequisites and Providers:
 | <a name="output_network_watcher_name"></a> [network\_watcher\_name](#output\_network\_watcher\_name) | The name of the Network Watcher. Changing this forces a new resource to be created. |
 | <a name="output_storage_account_id"></a> [storage\_account\_id](#output\_storage\_account\_id) | The ID of the Storage Account where flow logs are stored. |
 | <a name="output_tags"></a> [tags](#output\_tags) | The tags assigned to the resource. |
+| <a name="output_id"></a> [id](#output\_id) | The network security group configuration ID. |
+| <a name="output_name"></a> [name](#output\_name) | The name of the network security group. |
+| <a name="output_network_security_group_id"></a> [network\_security\_group\_id](#output\_network\_security\_group\_id) | The ID of network security group |
+| <a name="output_network_watcher_name"></a> [network\_watcher\_name](#output\_network\_watcher\_name) | The name of the Network Watcher. Changing this forces a new resource to be created. |
+| <a name="output_storage_account_id"></a> [storage\_account\_id](#output\_storage\_account\_id) | The ID of the Storage Account where flow logs are stored. |
+| <a name="output_tags"></a> [tags](#output\_tags) | The tags assigned to the resource. |
 
 <!-- 
 ## Module Dependencies
