@@ -3,7 +3,7 @@
   <img src="https://github.com/user-attachments/assets/5b2ab201-5926-46fa-b0a2-07a6f406ab6d" alt="Banner" />
 </p>
 <h1 align="center">
-    Terraform Azure Module Template
+    Terraform Azure Network Security Group
 </h1>
 
 <p align="center" style="font-size: 1.2rem;">
