@@ -3,9 +3,6 @@ on:
   pull_request:
     branches:
       - master
-    paths:
-      - 'examples/complete/**'
-      - 'examples/nsg_with_flow_logs/**'
 
 jobs:
   complete-example:
