@@ -3,7 +3,7 @@
 ##-----------------------------------------------------------------------------
 variable "custom_name" {
   type        = string
-  default     = ""
+  default     = null
   description = "Override default naming convention"
 }
 
@@ -73,8 +73,8 @@ variable "deployment_mode" {
 
 variable "label_order" {
   type        = list(any)
-  default     = ["name", "environment"]
-  description = "Label order, e.g. sequence of application name and environment `name`,`environment`,'attribute' [`webserver`,`qa`,`devops`,`public`,] ."
+  default     = ["name", "environment", "location"]
+  description = "The order of labels used to construct resource names or tags. If not specified, defaults to ['name', 'environment', 'location']."
 }
 
 ##-----------------------------------------------------------------------------
