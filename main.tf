@@ -4,7 +4,7 @@
 module "labels" {
   source          = "terraform-az-modules/tags/azure"
   version         = "1.0.0"
-  name            = var.custom_name == "" ? var.name : var.custom_name
+  name            = var.custom_name == null ? var.name : var.custom_name
   location        = var.location
   environment     = var.environment
   managedby       = var.managedby
@@ -96,6 +96,32 @@ resource "azurerm_network_security_rule" "outbound" {
 ##-----------------------------------------------------------------------------
 # NSG Flow Logs – Enables logging of ingress and egress IP traffic for monitoring
 ##-----------------------------------------------------------------------------
+# resource "azurerm_network_watcher_flow_log" "nsg_flow_logs" {
+#   for_each             = var.enabled && var.enable_flow_logs ? var.flow_log_configuration : {}
+#   name                 = format(var.resource_position_prefix ? "flow_logs-%s" : "%s-flow_logs", local.name,)
+#   enabled              = each.value.enabled
+#   version              = each.value.version
+#   network_watcher_name = each.value.network_watcher_name
+#   resource_group_name  = each.value.resource_group_name
+#   target_resource_id   = azurerm_network_security_group.nsg[0].id
+#   storage_account_id   = each.value.flow_log_storage_account_id
+#   retention_policy {
+#     enabled = each.value.flow_log_retention_policy_enabled
+#     days    = each.value.flow_log_retention_policy_days
+#   }
+#   dynamic "traffic_analytics" {
+#     for_each = each.value.enable_traffic_analytics ? [1] : []
+#     content {
+#       enabled               = each.value.enable_traffic_analytics
+#       workspace_id          = each.value.log_analytics_workspace_id
+#       workspace_region      = each.value.location
+#       workspace_resource_id = each.value.log_analytics_workspace_resource_id
+#       interval_in_minutes   = each.value.traffic_analytics_interval
+#     }
+#   }
+# }
+
+
 resource "azurerm_network_watcher_flow_log" "nsg_flow_logs" {
   count                = var.enabled && var.enable_flow_logs ? 1 : 0
   name                 = format(var.resource_position_prefix ? "flow_logs-%s" : "%s-flow_logs", local.name)
@@ -110,13 +136,13 @@ resource "azurerm_network_watcher_flow_log" "nsg_flow_logs" {
     days    = var.flow_log_retention_policy_days
   }
   dynamic "traffic_analytics" {
-    for_each = var.enable_traffic_analytics ? [1] : []
+    for_each = var.enable_traffic_analytics ? [var.traffic_analytics_settings] : []
     content {
-      enabled               = var.enable_traffic_analytics
-      workspace_id          = var.log_analytics_workspace_id
-      workspace_region      = var.location
-      workspace_resource_id = var.log_analytics_workspace_resource_id
-      interval_in_minutes   = 60
+      enabled               = true
+      workspace_id          = traffic_analytics.value.log_analytics_workspace_resource_id
+      workspace_region      = traffic_analytics.value.workspace_region
+      workspace_resource_id = traffic_analytics.value.log_analytics_workspace_id
+      interval_in_minutes   = traffic_analytics.value.interval_in_minutes
     }
   }
 }
@@ -146,3 +172,4 @@ resource "azurerm_monitor_diagnostic_setting" "nsg_diagnostic" {
     ignore_changes = [log_analytics_destination_type]
   }
 }
+

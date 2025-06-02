@@ -197,6 +197,22 @@ variable "enable_flow_logs" {
   description = "Flag to be set true when network security group flow logging feature is to be enabled."
 }
 
+variable "traffic_analytics_settings" {
+  type = object({
+    log_analytics_workspace_id          = string
+    workspace_region                    = string
+    log_analytics_workspace_resource_id = string
+    interval_in_minutes                 = number
+  })
+  default = {
+    log_analytics_workspace_id          = null
+    workspace_region                    = null
+    log_analytics_workspace_resource_id = null
+    interval_in_minutes                 = 60
+  }
+  description = "Settings for traffic analytics. This is used when enable_traffic_analytics is set to true."
+}
+
 variable "network_watcher_name" {
   type        = string
   default     = null
@@ -218,7 +234,7 @@ variable "flow_log_retention_policy_enabled" {
 variable "flow_log_retention_policy_days" {
   type        = number
   default     = 100
-  description = "The number of days to retain flow log records."
+  description = "Flow log retention days must be between 0 and 365 for all configurations."
 }
 
 variable "log_analytics_workspace_resource_id" {
@@ -244,6 +260,4 @@ variable "logs" {
   default     = []
   description = "List of log categories. Defaults to all available."
 }
-
-
 
