@@ -23,7 +23,7 @@ module "resource_group" {
   name        = local.name
   environment = local.environment
   label_order = local.label_order
-  location    = "North Europe"
+  location    = "northeurope"
 }
 
 ##-----------------------------------------------------------------------------
@@ -70,6 +70,24 @@ module "subnet" {
 }
 
 ##-----------------------------------------------------------------------------
+## Log Analytics module call.
+## Log Analytics workspace in which network security group diagnostic setting logs will be received.
+##-----------------------------------------------------------------------------
+module "log-analytics" {
+  source                           = "clouddrove/log-analytics/azure"
+  version                          = "2.0.0"
+  name                             = local.name
+  environment                      = local.environment
+  label_order                      = local.label_order
+  create_log_analytics_workspace   = true
+  resource_group_name              = module.resource_group.resource_group_name
+  log_analytics_workspace_location = module.resource_group.resource_group_location
+
+  #### diagnostic setting
+  log_analytics_workspace_id = module.log-analytics.workspace_id
+}
+
+##-----------------------------------------------------------------------------
 ## Storage Module call.
 ## Storage account in which network security group flow log will be received.
 ##-----------------------------------------------------------------------------
@@ -100,9 +118,10 @@ module "storage" {
   queues                   = ["queue1"]
   management_policy_enable = true
   #enable private endpoint
-  virtual_network_id = module.vnet.vnet_id
-  subnet_id          = module.subnet.default_subnet_id[0]
-  enable_diagnostic  = false
+  virtual_network_id                = module.vnet.vnet_id
+  subnet_id                         = module.subnet.default_subnet_id[0]
+  enable_diagnostic                 = false
+  enable_advanced_threat_protection = false
 }
 
 ##-----------------------------------------------------------------------------
@@ -118,10 +137,18 @@ module "network_security_group" {
   enable_flow_logs                  = true
   network_watcher_name              = module.vnet.network_watcher_name
   flow_log_storage_account_id       = module.storage.storage_account_id
-  enable_traffic_analytics          = false
+  enable_traffic_analytics          = true
   flow_log_retention_policy_enabled = true
   enable_diagnostic                 = true
   resource_position_prefix          = true
+
+  traffic_analytics_settings = {
+    log_analytics_workspace_id          = module.log-analytics.workspace_id
+    workspace_region                    = module.resource_group.resource_group_location
+    log_analytics_workspace_resource_id = module.log-analytics.workspace_customer_id
+    interval_in_minutes                 = 60
+  }
+
   inbound_rules = [
     {
       name                       = "ssh"
