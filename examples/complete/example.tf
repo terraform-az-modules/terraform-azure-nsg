@@ -8,7 +8,6 @@ locals {
   label_order = ["name", "environment"]
 }
 
-
 ##-----------------------------------------------------------------------------
 ## Resource Group module call
 ## Resource group in which all resources will be deployed.
@@ -19,8 +18,7 @@ module "resource_group" {
   name        = local.name
   environment = local.environment
   label_order = local.label_order
-  location    = "Canada Central"
-
+  location    = "canandacentral"
 }
 
 ##-----------------------------------------------------------------------------
