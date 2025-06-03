@@ -52,7 +52,7 @@ module "subnet" {
   subnet_prefixes = ["10.30.0.0/24"]
   # routes
   enable_route_table = true
-  route_table_name   = "default_subnet"
+  route_table_name   = "default-subnet"
   # routes
   routes = [
     {
