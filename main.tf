@@ -96,35 +96,9 @@ resource "azurerm_network_security_rule" "outbound" {
 ##-----------------------------------------------------------------------------
 # NSG Flow Logs – Enables logging of ingress and egress IP traffic for monitoring
 ##-----------------------------------------------------------------------------
-# resource "azurerm_network_watcher_flow_log" "nsg_flow_logs" {
-#   for_each             = var.enabled && var.enable_flow_logs ? var.flow_log_configuration : {}
-#   name                 = format(var.resource_position_prefix ? "flow_logs-%s" : "%s-flow_logs", local.name,)
-#   enabled              = each.value.enabled
-#   version              = each.value.version
-#   network_watcher_name = each.value.network_watcher_name
-#   resource_group_name  = each.value.resource_group_name
-#   target_resource_id   = azurerm_network_security_group.nsg[0].id
-#   storage_account_id   = each.value.flow_log_storage_account_id
-#   retention_policy {
-#     enabled = each.value.flow_log_retention_policy_enabled
-#     days    = each.value.flow_log_retention_policy_days
-#   }
-#   dynamic "traffic_analytics" {
-#     for_each = each.value.enable_traffic_analytics ? [1] : []
-#     content {
-#       enabled               = each.value.enable_traffic_analytics
-#       workspace_id          = each.value.log_analytics_workspace_id
-#       workspace_region      = each.value.location
-#       workspace_resource_id = each.value.log_analytics_workspace_resource_id
-#       interval_in_minutes   = each.value.traffic_analytics_interval
-#     }
-#   }
-# }
-
-
 resource "azurerm_network_watcher_flow_log" "nsg_flow_logs" {
   count                = var.enabled && var.enable_flow_logs ? 1 : 0
-  name                 = format(var.resource_position_prefix ? "flow_logs-%s" : "%s-flow_logs", local.name)
+  name                 = format(var.resource_position_prefix ? "flow-logs-%s" : "%s-flow-logs", local.name)
   enabled              = var.enabled
   version              = var.flow_log_version
   network_watcher_name = var.network_watcher_name
