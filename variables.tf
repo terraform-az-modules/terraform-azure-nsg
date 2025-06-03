@@ -237,12 +237,6 @@ variable "flow_log_retention_policy_days" {
   description = "Flow log retention days must be between 0 and 365 for all configurations."
 }
 
-variable "log_analytics_workspace_resource_id" {
-  type        = string
-  default     = null
-  description = "The resource ID of the attached log analytics workspace."
-}
-
 variable "enable_traffic_analytics" {
   type        = bool
   default     = false
