@@ -44,3 +44,17 @@ updates:
       - "Crew"
     # Allow up to 3 open pull requests for pip dependencies
     open-pull-requests-limit: 3
+
+  - package-ecosystem: "terraform" # See documentation for possible values
+    directory: "/examples/nsg_with_flow_logs" # Location of package manifests
+    schedule:
+      interval: "daily"
+    # Add assignees
+    assignees:
+      - "clouddrove-ci"
+    # Add reviewer
+    reviewers:
+      - "approvers"
+      - "Crew"
+    # Allow up to 3 open pull requests for pip dependencies
+    open-pull-requests-limit: 3
